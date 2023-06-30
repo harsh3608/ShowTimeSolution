@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShowTime.Core.IdentityEntities;
 using ShowTime.Infrastructure.DatabaseContext;
+using ShowTime.Services.IServices;
+using ShowTime.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
