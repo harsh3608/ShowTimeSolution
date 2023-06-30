@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using ShowTime.Infrastructure.DatabaseContext;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
