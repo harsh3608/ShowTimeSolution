@@ -1,4 +1,5 @@
-﻿using ShowTime.Services.IServices;
+﻿using ShowTime.Infrastructure.IRepositories;
+using ShowTime.Services.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,11 @@ namespace ShowTime.Services.Services
 {
     public class PunchService: IPunchService
     {
+        private readonly IPunchRepository _punchRepository;
+
+        public PunchService(IPunchRepository punchRepository)
+        {
+            _punchRepository = punchRepository;
+        }
     }
 }

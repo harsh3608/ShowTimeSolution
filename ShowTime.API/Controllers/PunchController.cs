@@ -7,5 +7,6 @@ namespace ShowTime.API.Controllers
     [ApiController]
     public class PunchController : ControllerBase
     {
+
     }
 }

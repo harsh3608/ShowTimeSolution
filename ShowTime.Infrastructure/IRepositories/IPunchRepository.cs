@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShowTime.Core.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace ShowTime.Infrastructure.IRepositories
 {
     public interface IPunchRepository
     {
+        Task<bool> AddPunch(PunchDTO punch);
     }
 }

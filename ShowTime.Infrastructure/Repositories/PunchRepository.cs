@@ -1,4 +1,5 @@
-﻿using ShowTime.Infrastructure.IRepositories;
+﻿using ShowTime.Infrastructure.DatabaseContext;
+using ShowTime.Infrastructure.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,10 @@ namespace ShowTime.Infrastructure.Repositories
 {
     public class PunchRepository: IPunchRepository
     {
+        private readonly ApplicationDbContext _context;
+        public PunchRepository(ApplicationDbContext applicationDbContext) 
+        {
+            applicationDbContext = _context;
+        }
     }
 }

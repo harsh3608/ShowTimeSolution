@@ -5,6 +5,8 @@ using ShowTime.Core.IdentityEntities;
 using ShowTime.Infrastructure.DatabaseContext;
 using ShowTime.Services.IServices;
 using ShowTime.Services.Services;
+using ShowTime.Infrastructure.IRepositories;
+using ShowTime.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to the container.
 // Service Scopes
 builder.Services.AddTransient<IJwtService, JwtService>();
+builder.Services.AddTransient<IPunchService, PunchService>();
+
+// Repositories
+builder.Services.AddTransient<IPunchRepository, PunchRepository>();
 
 //Identity
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
