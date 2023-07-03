@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ShowTime.Core.DTO;
+using ShowTime.Core.Entities;
 using ShowTime.Core.Models;
 using ShowTime.Infrastructure.DatabaseContext;
 using ShowTime.Infrastructure.IRepositories;
@@ -18,16 +19,37 @@ namespace ShowTime.Infrastructure.Repositories
         private readonly IMapper _mapper;
 
 
-        public PunchRepository(ApplicationDbContext applicationDbContext) 
+        public PunchRepository(ApplicationDbContext applicationDbContext, IMapper mapper) 
         {
             applicationDbContext = _context;
+            _mapper = mapper;
         }
 
-        public async Task<PunchDTO> AddPunch(PunchAddRequest punch)
+        public async Task<PunchDTO> AddPunch(PunchAddRequest punchAddRequest)
         {
+            Punch punch = new Punch();
+
+            _mapper.Map(punchAddRequest, punch);
 
             await _context.Punches.AddAsync(punch);
             await _context.SaveChangesAsync();
+
+            PunchDTO punchDTO = new PunchDTO();
+
+            _mapper.Map(punch, punchDTO);
+            return punchDTO;
+        }
+
+        public async Task<string?> GetPunchStatus(Guid userId)
+        {
+            var latestpunch = await _context.Punches.LastOrDefaultAsync(x => x.UserId == userId);
+
+            if (latestpunch == null)
+            {
+                return null;
+            }
+
+            return latestpunch.PunchStatus;
         }
     }
 }
