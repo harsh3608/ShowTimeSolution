@@ -49,13 +49,17 @@ namespace ShowTime.Infrastructure.Repositories
 
         public async Task<List<PunchDTO>> GetAllPunchedInUsers()
         {
-            var PunchedInUsers = await _context.Punches.Where(x => x.PunchStatus == true && x.PunchDateTime == DateTime.Today).ToListAsync();
+            var today = DateTime.Today.Date;
+            var latestPunches = await _context.Punches
+                .Where(x => x.PunchStatus && x.PunchDateTime.Date == today)
+                .GroupBy(x => x.UserId)
+                .Select(g => g.OrderByDescending(x => x.PunchDateTime).FirstOrDefault())
+                .ToListAsync();
 
-            if (PunchedInUsers == null) { return null; }
-
-            List<PunchDTO> PunchedInUsersList = _mapper.Map<List<PunchDTO>>(PunchedInUsers);
-
-            return PunchedInUsersList;
+            var latestPunchedInUsers = _mapper.Map<List<PunchDTO>>(latestPunches);
+            return latestPunchedInUsers;
         }
+
+
     }
 }
