@@ -5,23 +5,18 @@ using ShowTime.Core.Entities;
 using ShowTime.Core.Models;
 using ShowTime.Infrastructure.DatabaseContext;
 using ShowTime.Infrastructure.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShowTime.Infrastructure.Repositories
 {
-    public class PunchRepository: IPunchRepository
+    public class PunchRepository : IPunchRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
 
-        public PunchRepository(ApplicationDbContext applicationDbContext, IMapper mapper) 
+        public PunchRepository(ApplicationDbContext applicationDbContext, IMapper mapper)
         {
-            applicationDbContext = _context;
+            _context = applicationDbContext;
             _mapper = mapper;
         }
 
@@ -40,7 +35,7 @@ namespace ShowTime.Infrastructure.Repositories
             return punchDTO;
         }
 
-        public async Task<string?> GetPunchStatus(Guid userId)
+        public async Task<bool?> GetPunchStatus(Guid userId)
         {
             var latestpunch = await _context.Punches.LastOrDefaultAsync(x => x.UserId == userId);
 
@@ -50,6 +45,17 @@ namespace ShowTime.Infrastructure.Repositories
             }
 
             return latestpunch.PunchStatus;
+        }
+
+        public async Task<List<PunchDTO>> GetAllPunchedInUsers()
+        {
+            var PunchedInUsers = await _context.Punches.Where(x => x.PunchStatus == true && x.PunchDateTime == DateTime.Today).ToListAsync();
+
+            if (PunchedInUsers == null) { return null; }
+
+            List<PunchDTO> PunchedInUsersList = _mapper.Map<List<PunchDTO>>(PunchedInUsers);
+
+            return PunchedInUsersList;
         }
     }
 }
