@@ -23,6 +23,8 @@ namespace ShowTime.Services.Services
         {
             punch.Id = Guid.NewGuid();
 
+            punch.PunchDateTime = DateTime.Now;
+
             var punchResponse = await _punchRepository.AddPunch(punch);
             
             return punchResponse;
