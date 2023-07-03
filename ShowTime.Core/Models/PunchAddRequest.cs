@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShowTime.Core.Entities
+namespace ShowTime.Core.Models
 {
-    public class Punch
+    public class PunchAddRequest
     {
         public Guid Id { get; set; }
-        
+
         public DateTime PunchDateTime { get; set; }
 
         public Guid UserId { get; set; }
@@ -17,6 +17,5 @@ namespace ShowTime.Core.Entities
         public string? UserName { get; set; }
 
         public string? PunchStatus { get; set; }
-
     }
 }

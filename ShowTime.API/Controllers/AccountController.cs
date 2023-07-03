@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ namespace ShowTime.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -55,7 +57,7 @@ namespace ShowTime.API.Controllers
                 UserName = registerDTO.Email,
                 PersonName = registerDTO.PersonName,
                 Gender = registerDTO.Gender,
-                UserType = nameof(UserTypeOptions.Admin),
+                UserType = nameof(UserTypeOptions.Employee),
                 JobRole = registerDTO.JobRole,
             };
 
