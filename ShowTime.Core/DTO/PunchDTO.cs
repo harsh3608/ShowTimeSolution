@@ -8,6 +8,7 @@ namespace ShowTime.Core.DTO
 {
     public class PunchDTO
     {
+        public Guid Id { get; set; }
         public DateTime PunchDateTime { get; set; }
 
         public Guid UserId { get; set; }

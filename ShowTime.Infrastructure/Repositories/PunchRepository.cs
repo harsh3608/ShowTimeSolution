@@ -1,4 +1,5 @@
-﻿using ShowTime.Infrastructure.DatabaseContext;
+﻿using ShowTime.Core.DTO;
+using ShowTime.Infrastructure.DatabaseContext;
 using ShowTime.Infrastructure.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,11 @@ namespace ShowTime.Infrastructure.Repositories
         public PunchRepository(ApplicationDbContext applicationDbContext) 
         {
             applicationDbContext = _context;
+        }
+
+        public async Task<bool> AddPunch(PunchDTO punch)
+        {
+
         }
     }
 }

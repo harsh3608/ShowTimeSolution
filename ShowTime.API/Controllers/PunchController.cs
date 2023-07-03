@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShowTime.Services.IServices;
 
 namespace ShowTime.API.Controllers
 {
@@ -7,6 +8,13 @@ namespace ShowTime.API.Controllers
     [ApiController]
     public class PunchController : ControllerBase
     {
+        private readonly IPunchService _service;
+
+        public PunchController(IPunchService service)
+        {
+            _service = service;
+        }
+
 
     }
 }
