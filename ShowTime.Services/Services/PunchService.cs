@@ -30,9 +30,16 @@ namespace ShowTime.Services.Services
             return punchResponse;
         }
 
-        public async Task<string> GetPunchStatus(Guid userId)
+        public async Task<bool?> GetPunchStatus(Guid userId)
         {
             return await _punchRepository.GetPunchStatus(userId);
+        }
+
+        public async Task<List<PunchDTO>> GetAllPunchedInUsers()
+        {
+            var punchedInUsers = await _punchRepository.GetAllPunchedInUsers();
+
+            return punchedInUsers;
         }
     }
 }

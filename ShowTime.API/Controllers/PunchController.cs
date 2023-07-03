@@ -78,10 +78,10 @@ namespace ShowTime.API.Controllers
 
 
         [HttpGet]
-        [Route("GetPunchStatus")]
-        public async Task<ResponseDTO<string>> GetPunchStatus(Guid userId)
+        [Route("GetUserLatestPunchStatus/{userId:Guid}")]
+        public async Task<ResponseDTO<bool?>> GetUserLatestPunchStatus([FromRoute]Guid userId)
         {
-            ResponseDTO<string> response = new ResponseDTO<string>();
+            ResponseDTO<bool?> response = new ResponseDTO<bool?>();
 
             if (!ModelState.IsValid)
             {
@@ -102,6 +102,47 @@ namespace ShowTime.API.Controllers
                     response.IsSuccess = true;
                     response.Response = status;
                     response.Message = "User Punch fetched successfully";
+
+                    return response;
+                }
+                else
+                {
+                    response.StatusCode = 500;
+                    response.IsSuccess = false;
+                    response.Response = null;
+                    response.Message = "Internal Server Error";
+
+                    return response;
+                }
+            }
+        }
+
+
+        [HttpGet]
+        [Route("GetAllPunchedInUsers")]
+        public async Task<ResponseDTO<List<PunchDTO>>> GetAllPunchedInUsers()
+        {
+            ResponseDTO<List<PunchDTO>> response = new ResponseDTO<List<PunchDTO>>();
+
+            if (!ModelState.IsValid)
+            {
+                response.StatusCode = 400;
+                response.IsSuccess = false;
+                response.Response = null;
+                response.Message = "Bad Request, One or more validation errors occured.";
+
+                return response;
+            }
+            else
+            {
+                var punchedInUsers = await _punchService.GetAllPunchedInUsers();
+
+                if (punchedInUsers != null)
+                {
+                    response.StatusCode = 200;
+                    response.IsSuccess = true;
+                    response.Response = punchedInUsers;
+                    response.Message = "PunchedIn users fetched successfully";
 
                     return response;
                 }

@@ -12,6 +12,8 @@ namespace ShowTime.Services.IServices
     {
         Task<PunchDTO> AddPunch(PunchAddRequest punch);
 
-        Task<string> GetPunchStatus(Guid userId);
+        Task<bool?> GetPunchStatus(Guid userId);
+
+        Task<List<PunchDTO>> GetAllPunchedInUsers();
     }
 }
