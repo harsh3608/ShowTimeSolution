@@ -55,7 +55,7 @@ namespace ShowTime.API.Controllers
                 UserName = registerDTO.Email,
                 PersonName = registerDTO.PersonName,
                 Gender = registerDTO.Gender,
-                UserType = nameof(UserTypeOptions.Admin),
+                UserType = nameof(UserTypeOptions.Employee),
                 JobRole = registerDTO.JobRole,
             };
 
