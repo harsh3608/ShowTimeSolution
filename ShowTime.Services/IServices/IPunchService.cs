@@ -1,4 +1,5 @@
 ﻿using ShowTime.Core.DTO;
+using ShowTime.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace ShowTime.Services.IServices
 {
     public interface IPunchService
     {
-        Task<bool> AddPunch(PunchDTO punch);
+        Task<PunchDTO> AddPunch(PunchAddRequest punch);
+
+        Task<string> GetPunchStatus(Guid userId);
     }
 }

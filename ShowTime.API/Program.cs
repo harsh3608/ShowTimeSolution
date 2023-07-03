@@ -17,6 +17,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
 
+//AutoMapper as a service
+builder.Services.AddAutoMapper(typeof(MappingProfiles));
+
 
 // Add services to the container.
 // Service Scopes
