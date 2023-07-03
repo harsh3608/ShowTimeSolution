@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace ShowTime.Core.DTO
 {
-    internal class PunchDTO
+    public class PunchDTO
     {
+        public DateTime PunchDateTime { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public string? PunchStatus { get; set; }
     }
 }
