@@ -70,9 +70,34 @@ namespace ShowTime.Infrastructure.Repositories
             var punchesForToday = _mapper.Map<List<PunchDTO>>(punchDetails);
 
             return punchesForToday;
-
-
-
         }
+
+
+        public async Task<TimeSpan> CalculateTotalPunchedInTime(Guid userId)
+        {
+            var punches = await _context.Punches
+            .Where(p => p.UserId == userId && p.PunchStatus )
+            .OrderBy(p => p.PunchDateTime)
+            .ToListAsync();
+
+            TimeSpan totalPunchedInTime = TimeSpan.Zero;
+            DateTime? previousPunchDateTime = null;
+
+            foreach (var punch in punches)
+            {
+                if (previousPunchDateTime.HasValue)
+                {
+                    TimeSpan duration = punch.PunchDateTime - previousPunchDateTime.Value;
+                    totalPunchedInTime += duration;
+                }
+
+                previousPunchDateTime = punch.PunchDateTime;
+            }
+
+            return totalPunchedInTime;
+        }
+
+
+
     }
 }

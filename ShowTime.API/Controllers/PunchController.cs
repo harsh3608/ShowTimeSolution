@@ -199,5 +199,51 @@ namespace ShowTime.API.Controllers
             }
 
         }
+
+
+        [HttpGet]
+        [Route("CalculateTotalPunchedInTime/{userId:Guid}")]
+        public async Task<ResponseDTO<TimeSpan>> CalculateTotalPunchedInTime(Guid userId)
+        {
+            ResponseDTO<TimeSpan> response = new ResponseDTO<TimeSpan>();
+
+            if (!ModelState.IsValid)
+            {
+                response.StatusCode = 400;
+                response.IsSuccess = false;
+                response.Response = TimeSpan.Zero;
+                response.Message = "Bad Request, One or more validation errors occured.";
+
+                return response;
+            }
+            else
+            {
+                var punchedInTime = await _punchService.CalculateTotalPunchedInTime(userId);
+
+                if (punchedInTime != TimeSpan.Zero)
+                {
+                    response.StatusCode = 200;
+                    response.IsSuccess = true;
+                    response.Response = punchedInTime;
+                    response.Message = "User's all punches for today fetched successfully";
+
+                    return response;
+                }
+                else
+                {
+                    response.StatusCode = 500;
+                    response.IsSuccess = false;
+                    response.Response = TimeSpan.Zero;
+                    response.Message = "Internal Server Error";
+
+                    return response;
+                }
+            }
+
+        }
+
+
+
+
     }
 }

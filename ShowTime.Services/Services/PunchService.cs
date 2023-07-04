@@ -52,6 +52,10 @@ namespace ShowTime.Services.Services
             return punchesForToday;
         }
 
-
+        public async Task<TimeSpan> CalculateTotalPunchedInTime(Guid userId)
+        {
+            var punchedInTime = await _punchRepository.CalculateTotalPunchedInTime(userId);
+            return punchedInTime;
+        }
     }
 }
