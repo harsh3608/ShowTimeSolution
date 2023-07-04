@@ -19,4 +19,8 @@ namespace ShowTime.Core.Entities
         public bool PunchStatus { get; set; }
 
     }
+
+
+
+
 }

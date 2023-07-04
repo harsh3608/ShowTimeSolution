@@ -32,7 +32,9 @@ namespace ShowTime.Services.Services
 
         public async Task<bool?> GetPunchStatus(Guid userId)
         {
-            return await _punchRepository.GetPunchStatus(userId);
+            var status = await _punchRepository.GetPunchStatus(userId);
+
+            return status;
         }
 
         public async Task<List<PunchDTO>> GetAllPunchedInUsers()
