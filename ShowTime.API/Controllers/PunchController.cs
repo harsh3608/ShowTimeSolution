@@ -79,7 +79,7 @@ namespace ShowTime.API.Controllers
 
         [HttpGet]
         [Route("GetUserLatestPunchStatus/{userId:Guid}")]
-        public async Task<ResponseDTO<bool?>> GetUserLatestPunchStatus([FromRoute]Guid userId)
+        public async Task<ResponseDTO<bool?>> GetUserLatestPunchStatus([FromRoute] Guid userId)
         {
             ResponseDTO<bool?> response = new ResponseDTO<bool?>();
 
@@ -157,5 +157,93 @@ namespace ShowTime.API.Controllers
                 }
             }
         }
+
+
+        [HttpGet]
+        [Route("GetAllUserPunchesForToday/{userId:Guid}")]
+        public async Task<ResponseDTO<List<PunchDTO>>> GetAllUserPunchesForToday(Guid userId)
+        {
+            ResponseDTO<List<PunchDTO>> response = new ResponseDTO<List<PunchDTO>>();
+
+            if (!ModelState.IsValid)
+            {
+                response.StatusCode = 400;
+                response.IsSuccess = false;
+                response.Response = null;
+                response.Message = "Bad Request, One or more validation errors occured.";
+
+                return response;
+            }
+            else
+            {
+                var punches = await _punchService.GetAllUserPunchesForToday(userId);
+
+                if (punches != null)
+                {
+                    response.StatusCode = 200;
+                    response.IsSuccess = true;
+                    response.Response = punches;
+                    response.Message = "User's all punches for today fetched successfully";
+
+                    return response;
+                }
+                else
+                {
+                    response.StatusCode = 500;
+                    response.IsSuccess = false;
+                    response.Response = null;
+                    response.Message = "Internal Server Error";
+
+                    return response;
+                }
+            }
+
+        }
+
+
+        [HttpGet]
+        [Route("CalculateTotalPunchedInTime/{userId:Guid}")]
+        public async Task<ResponseDTO<TimeSpan>> CalculateTotalPunchedInTime(Guid userId)
+        {
+            ResponseDTO<TimeSpan> response = new ResponseDTO<TimeSpan>();
+
+            if (!ModelState.IsValid)
+            {
+                response.StatusCode = 400;
+                response.IsSuccess = false;
+                response.Response = TimeSpan.Zero;
+                response.Message = "Bad Request, One or more validation errors occured.";
+
+                return response;
+            }
+            else
+            {
+                var punchedInTime = await _punchService.CalculateTotalPunchedInTime(userId);
+
+                if (punchedInTime != TimeSpan.Zero)
+                {
+                    response.StatusCode = 200;
+                    response.IsSuccess = true;
+                    response.Response = punchedInTime;
+                    response.Message = "User's all punches for today fetched successfully";
+
+                    return response;
+                }
+                else
+                {
+                    response.StatusCode = 500;
+                    response.IsSuccess = false;
+                    response.Response = TimeSpan.Zero;
+                    response.Message = "Internal Server Error";
+
+                    return response;
+                }
+            }
+
+        }
+
+
+
+
     }
 }

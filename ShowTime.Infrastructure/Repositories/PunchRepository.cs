@@ -37,28 +37,66 @@ namespace ShowTime.Infrastructure.Repositories
 
         public async Task<bool?> GetPunchStatus(Guid userId)
         {
-            var latestpunch = await _context.Punches.LastOrDefaultAsync(x => x.UserId == userId);
+            var latestPunchStatus = await _context.Punches
+            .Where(p => p.UserId == userId)
+            .OrderByDescending(p => p.PunchDateTime)
+            .Select(p => p.PunchStatus)
+            .FirstOrDefaultAsync();
 
-            if (latestpunch == null)
-            {
-                return null;
-            }
-
-            return latestpunch.PunchStatus;
+            return latestPunchStatus;
         }
 
         public async Task<List<PunchDTO>> GetAllPunchedInUsers()
         {
-            var today = DateTime.Today.Date;
-            var latestPunches = await _context.Punches
-                .Where(x => x.PunchStatus && x.PunchDateTime.Date == today)
-                .GroupBy(x => x.UserId)
-                .Select(g => g.OrderByDescending(x => x.PunchDateTime).FirstOrDefault())
-                .ToListAsync();
+            DateTime today = DateTime.Today;
 
-            var latestPunchedInUsers = _mapper.Map<List<PunchDTO>>(latestPunches);
+            var punches = await _context.Punches.FromSqlRaw("GetAllPunchedInUsers").ToListAsync();
+
+
+
+            var latestPunchedInUsers = _mapper.Map<List<PunchDTO>>(punches);
             return latestPunchedInUsers;
         }
+
+        public async Task<List<PunchDTO>> GetAllUserPunchesForToday(Guid userId)
+        {
+            var currentDate = DateTime.Today;
+
+            var punchDetails = await _context.Punches
+                .Where(p => p.UserId == userId && p.PunchDateTime >= currentDate)
+                .OrderByDescending(p => p.PunchDateTime)
+                .ToListAsync();
+
+            var punchesForToday = _mapper.Map<List<PunchDTO>>(punchDetails);
+
+            return punchesForToday;
+        }
+
+
+        public async Task<TimeSpan> CalculateTotalPunchedInTime(Guid userId)
+        {
+            var punches = await _context.Punches
+            .Where(p => p.UserId == userId && p.PunchStatus )
+            .OrderBy(p => p.PunchDateTime)
+            .ToListAsync();
+
+            TimeSpan totalPunchedInTime = TimeSpan.Zero;
+            DateTime? previousPunchDateTime = null;
+
+            foreach (var punch in punches)
+            {
+                if (previousPunchDateTime.HasValue)
+                {
+                    TimeSpan duration = punch.PunchDateTime - previousPunchDateTime.Value;
+                    totalPunchedInTime += duration;
+                }
+
+                previousPunchDateTime = punch.PunchDateTime;
+            }
+
+            return totalPunchedInTime;
+        }
+
 
 
     }
