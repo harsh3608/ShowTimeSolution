@@ -58,6 +58,21 @@ namespace ShowTime.Infrastructure.Repositories
             return latestPunchedInUsers;
         }
 
+        public async Task<List<PunchDTO>> GetAllUserPunchesForToday(Guid userId)
+        {
+            var currentDate = DateTime.Today;
 
+            var punchDetails = await _context.Punches
+                .Where(p => p.UserId == userId && p.PunchDateTime >= currentDate)
+                .OrderByDescending(p => p.PunchDateTime)
+                .ToListAsync();
+
+            var punchesForToday = _mapper.Map<List<PunchDTO>>(punchDetails);
+
+            return punchesForToday;
+
+
+
+        }
     }
 }

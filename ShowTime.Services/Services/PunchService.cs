@@ -43,5 +43,15 @@ namespace ShowTime.Services.Services
 
             return punchedInUsers;
         }
+
+
+        public async Task<List<PunchDTO>> GetAllUserPunchesForToday(Guid userId)
+        {
+            var punchesForToday = await _punchRepository.GetAllUserPunchesForToday(userId);
+
+            return punchesForToday;
+        }
+
+
     }
 }
