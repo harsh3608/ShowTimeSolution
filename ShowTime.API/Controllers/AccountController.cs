@@ -180,5 +180,62 @@ namespace ShowTime.API.Controllers
                 return response;
             }
         }
+
+
+        [HttpPost("Change-Password")]
+        public async Task<ResponseDTO<IActionResult>> ChangePassword(ChangePasswordDTO model)
+        {
+            ResponseDTO<IActionResult> response = new ResponseDTO<IActionResult>();
+
+
+            if (!ModelState.IsValid)
+            {
+                response.StatusCode = 400;
+                response.IsSuccess = false;
+                response.Response = BadRequest(ModelState);
+                response.Message = "Bad Request";
+
+                return response;
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                response.StatusCode = 404;
+                response.IsSuccess = false;
+                response.Response = NotFound("User not found.");
+                response.Message = "User Not Found";
+
+                return response;
+            }
+
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+            if (!changePasswordResult.Succeeded)
+            {
+                foreach (var error in changePasswordResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                response.StatusCode = 500;
+                response.IsSuccess = false;
+                response.Response = BadRequest(ModelState);
+                response.Message = "Changing password failed";
+
+                return response;
+            }
+
+            await _signInManager.RefreshSignInAsync(user);
+
+            response.StatusCode = 200;
+            response.IsSuccess = true;
+            response.Response = Ok("Password changed successfully.");
+            response.Message = "Password changed successfully.";
+
+            return response;
+        }
+
+
+
     }
 }

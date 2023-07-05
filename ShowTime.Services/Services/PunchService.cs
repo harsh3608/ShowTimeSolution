@@ -57,5 +57,13 @@ namespace ShowTime.Services.Services
             var punchedInTime = await _punchRepository.CalculateTotalPunchedInTime(userId);
             return punchedInTime;
         }
+
+
+        public async Task<List<WorkingTimeDTO>> GetFiveDaysWorkingTime(Guid userId)
+        {
+            var workingTimes = await _punchRepository.GetFiveDaysWorkingTime(userId);
+
+            return workingTimes;
+        }
     }
 }

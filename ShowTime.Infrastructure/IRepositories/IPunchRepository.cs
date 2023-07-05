@@ -20,5 +20,7 @@ namespace ShowTime.Infrastructure.IRepositories
         Task<List<PunchDTO>> GetAllUserPunchesForToday(Guid userId);
 
         Task<TimeSpan> CalculateTotalPunchedInTime(Guid userId);
+
+        Task<List<WorkingTimeDTO>> GetFiveDaysWorkingTime(Guid userId);
     }
 }

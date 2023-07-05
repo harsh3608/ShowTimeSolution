@@ -75,10 +75,14 @@ namespace ShowTime.Infrastructure.Repositories
 
         public async Task<TimeSpan> CalculateTotalPunchedInTime(Guid userId)
         {
+            DateTime currentDate = DateTime.Today;
+            DateTime currentDayStart = currentDate.Date;
+            DateTime currentDayEnd = currentDayStart.AddDays(1);
+
             var punches = await _context.Punches
-            .Where(p => p.UserId == userId && p.PunchStatus )
-            .OrderBy(p => p.PunchDateTime)
-            .ToListAsync();
+                .Where(p => p.UserId == userId && p.PunchStatus && p.PunchDateTime >= currentDayStart && p.PunchDateTime < currentDayEnd)
+                .OrderBy(p => p.PunchDateTime)
+                .ToListAsync();
 
             TimeSpan totalPunchedInTime = TimeSpan.Zero;
             DateTime? previousPunchDateTime = null;
@@ -98,6 +102,43 @@ namespace ShowTime.Infrastructure.Repositories
         }
 
 
+        public async Task<List<WorkingTimeDTO>> GetFiveDaysWorkingTime(Guid userId)
+        {
+            DateTime currentDate = DateTime.Today;
+            DateTime fiveDaysAgo = currentDate.AddDays(-5).Date;
+            DateTime currentDayStart = currentDate.Date;
+            DateTime currentDayEnd = currentDayStart.AddDays(1);
+
+            var punches = await _context.Punches
+                .Where(p => p.UserId == userId && p.PunchStatus && p.PunchDateTime >= fiveDaysAgo && p.PunchDateTime < currentDayEnd)
+                .OrderBy(p => p.PunchDateTime)
+                .ToListAsync();
+
+            List<WorkingTimeDTO> workingTimes = new List<WorkingTimeDTO>();
+            DateTime? previousPunchDateTime = null;
+
+            foreach (var punch in punches)
+            {
+                if (previousPunchDateTime.HasValue)
+                {
+                    TimeSpan duration = punch.PunchDateTime - previousPunchDateTime.Value;
+                    WorkingTimeDTO workingTime = new WorkingTimeDTO
+                    {
+                        Date = previousPunchDateTime.Value.Date,
+                        WorkingTime = duration
+                    };
+
+                    if (!workingTimes.Any(w => w.Date == workingTime.Date))
+                    {
+                        workingTimes.Add(workingTime);
+                    }
+                }
+
+                previousPunchDateTime = punch.PunchDateTime;
+            }
+
+            return workingTimes;
+        }
 
     }
 }
