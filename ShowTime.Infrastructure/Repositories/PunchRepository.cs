@@ -75,10 +75,14 @@ namespace ShowTime.Infrastructure.Repositories
 
         public async Task<TimeSpan> CalculateTotalPunchedInTime(Guid userId)
         {
+            DateTime currentDate = DateTime.Today;
+            DateTime currentDayStart = currentDate.Date;
+            DateTime currentDayEnd = currentDayStart.AddDays(1);
+
             var punches = await _context.Punches
-            .Where(p => p.UserId == userId && p.PunchStatus )
-            .OrderBy(p => p.PunchDateTime)
-            .ToListAsync();
+                .Where(p => p.UserId == userId && p.PunchStatus && p.PunchDateTime >= currentDayStart && p.PunchDateTime < currentDayEnd)
+                .OrderBy(p => p.PunchDateTime)
+                .ToListAsync();
 
             TimeSpan totalPunchedInTime = TimeSpan.Zero;
             DateTime? previousPunchDateTime = null;
