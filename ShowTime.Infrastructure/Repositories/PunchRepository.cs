@@ -5,6 +5,7 @@ using ShowTime.Core.Entities;
 using ShowTime.Core.Models;
 using ShowTime.Infrastructure.DatabaseContext;
 using ShowTime.Infrastructure.IRepositories;
+using System;
 
 namespace ShowTime.Infrastructure.Repositories
 {
@@ -104,41 +105,64 @@ namespace ShowTime.Infrastructure.Repositories
 
         public async Task<List<WorkingTimeDTO>> GetFiveDaysWorkingTime(Guid userId)
         {
+
             DateTime currentDate = DateTime.Today;
             DateTime fiveDaysAgo = currentDate.AddDays(-5).Date;
             DateTime currentDayStart = currentDate.Date;
             DateTime currentDayEnd = currentDayStart.AddDays(1);
 
             var punches = await _context.Punches
-                .Where(p => p.UserId == userId && p.PunchStatus && p.PunchDateTime >= fiveDaysAgo && p.PunchDateTime < currentDayEnd)
+                .Where(p => p.UserId == userId && p.PunchDateTime >= fiveDaysAgo && p.PunchDateTime < currentDayEnd)
                 .OrderBy(p => p.PunchDateTime)
                 .ToListAsync();
 
             List<WorkingTimeDTO> workingTimes = new List<WorkingTimeDTO>();
-            DateTime? previousPunchDateTime = null;
+            DateTime previousPunchDateTime = DateTime.MinValue;
+            double totalWorkingHours = 0;
 
             foreach (var punch in punches)
             {
-                if (previousPunchDateTime.HasValue)
+                if (previousPunchDateTime != DateTime.MinValue && punch.PunchDateTime.Date != previousPunchDateTime.Date)
                 {
-                    TimeSpan duration = punch.PunchDateTime - previousPunchDateTime.Value;
                     WorkingTimeDTO workingTime = new WorkingTimeDTO
                     {
-                        Date = previousPunchDateTime.Value.Date,
-                        WorkingTime = duration
+                        Date = previousPunchDateTime.Date,
+                        WorkingTime = totalWorkingHours
                     };
 
-                    if (!workingTimes.Any(w => w.Date == workingTime.Date))
-                    {
-                        workingTimes.Add(workingTime);
-                    }
+                    workingTimes.Add(workingTime);
+                    totalWorkingHours = 0;
                 }
 
-                previousPunchDateTime = punch.PunchDateTime;
+                if (punch.PunchStatus)
+                {
+                    previousPunchDateTime = punch.PunchDateTime;
+                }
+                else if (previousPunchDateTime != DateTime.MinValue)
+                {
+                    totalWorkingHours += (punch.PunchDateTime - previousPunchDateTime).TotalHours;
+                }
+            }
+
+            // Add the working time for the last day
+            if (previousPunchDateTime != DateTime.MinValue)
+            {
+                WorkingTimeDTO workingTime = new WorkingTimeDTO
+                {
+                    Date = previousPunchDateTime.Date,
+                    WorkingTime = totalWorkingHours
+                };
+
+                workingTimes.Add(workingTime);
             }
 
             return workingTimes;
+
         }
+
+
+
+
 
     }
 }

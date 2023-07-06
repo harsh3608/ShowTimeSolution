@@ -9,7 +9,7 @@ namespace ShowTime.Core.DTO
     public class WorkingTimeDTO
     {
         public DateTime Date { get; set; }
-        public TimeSpan WorkingTime { get; set; }
+        public Double WorkingTime { get; set; }
     }
 
 
