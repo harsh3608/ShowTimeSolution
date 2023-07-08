@@ -267,7 +267,7 @@ namespace ShowTime.API.Controllers
                     response.StatusCode = 200;
                     response.IsSuccess = true;
                     response.Response = workingTimes;
-                    response.Message = "User's all punches for today fetched successfully";
+                    response.Message = "User's working hours for five days fetched successfully";
 
                     return response;
                 }
