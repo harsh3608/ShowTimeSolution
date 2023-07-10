@@ -21,5 +21,7 @@ namespace ShowTime.Services.IServices
         Task<TimeSpan> CalculateTotalPunchedInTime(Guid userId);
 
         Task<List<WorkingTimeDTO>> GetFiveDaysWorkingTime(Guid userId);
+
+        Task<List<WorkingTimeDTO>> GetAllDaysWorkingTime(Guid userId);
     }
 }

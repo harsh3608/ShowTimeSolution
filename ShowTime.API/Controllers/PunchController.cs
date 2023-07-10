@@ -285,5 +285,47 @@ namespace ShowTime.API.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetAllDaysWorkingTime/{userId:Guid}")]
+        public async Task<ResponseDTO<List<WorkingTimeDTO>>> GetAllDaysWorkingTime(Guid userId)
+        {
+            ResponseDTO<List<WorkingTimeDTO>> response = new ResponseDTO<List<WorkingTimeDTO>>();
+
+            if (!ModelState.IsValid)
+            {
+                response.StatusCode = 400;
+                response.IsSuccess = false;
+                response.Response = null;
+                response.Message = "Bad Request, One or more validation errors occured.";
+
+                return response;
+            }
+            else
+            {
+                var workingTimes = await _punchService.GetAllDaysWorkingTime(userId);
+
+                if (workingTimes != null)
+                {
+                    response.StatusCode = 200;
+                    response.IsSuccess = true;
+                    response.Response = workingTimes;
+                    response.Message = "User's working hours for five days fetched successfully";
+
+                    return response;
+                }
+                else
+                {
+                    response.StatusCode = 500;
+                    response.IsSuccess = false;
+                    response.Response = null;
+                    response.Message = "Internal Server Error";
+
+                    return response;
+                }
+            }
+
+        }
+
+
     }
 }
