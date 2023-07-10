@@ -106,6 +106,56 @@ namespace ShowTime.Infrastructure.Repositories
         public async Task<List<WorkingTimeDTO>> GetFiveDaysWorkingTime(Guid userId)
         {
 
+            //DateTime currentDate = DateTime.Today;
+            //DateTime fiveDaysAgo = currentDate.AddDays(-5).Date;
+            //DateTime currentDayStart = currentDate.Date;
+            //DateTime currentDayEnd = currentDayStart.AddDays(1);
+
+            //var punches = await _context.Punches
+            //    .Where(p => p.UserId == userId && p.PunchDateTime >= fiveDaysAgo && p.PunchDateTime < currentDayEnd)
+            //    .OrderBy(p => p.PunchDateTime)
+            //    .ToListAsync();
+
+            //Dictionary<DateTime, double> dailyWorkingTimes = new Dictionary<DateTime, double>();
+            //DateTime previousPunchDateTime = DateTime.MinValue;
+
+            //foreach (var punch in punches)
+            //{
+            //    if (previousPunchDateTime != DateTime.MinValue && punch.PunchDateTime.Date != previousPunchDateTime.Date)
+            //    {
+            //        double totalWorkingHours = (punch.PunchDateTime - previousPunchDateTime).TotalHours;
+
+            //        if (dailyWorkingTimes.ContainsKey(previousPunchDateTime.Date))
+            //        {
+            //            dailyWorkingTimes[previousPunchDateTime.Date] += totalWorkingHours;
+            //        }
+            //        else
+            //        {
+            //            dailyWorkingTimes[previousPunchDateTime.Date] = totalWorkingHours;
+            //        }
+            //    }
+
+            //    if (punch.PunchStatus)
+            //    {
+            //        previousPunchDateTime = punch.PunchDateTime;
+            //    }
+            //}
+
+            //List<WorkingTimeDTO> workingTimes = new List<WorkingTimeDTO>();
+
+            //foreach (var entry in dailyWorkingTimes)
+            //{
+            //    WorkingTimeDTO workingTime = new WorkingTimeDTO
+            //    {
+            //        Date = entry.Key.Date,
+            //        WorkingTime = entry.Value
+            //    };
+
+            //    workingTimes.Add(workingTime);
+            //}
+
+            //return workingTimes;
+
             DateTime currentDate = DateTime.Today;
             DateTime fiveDaysAgo = currentDate.AddDays(-5).Date;
             DateTime currentDayStart = currentDate.Date;
@@ -116,39 +166,41 @@ namespace ShowTime.Infrastructure.Repositories
                 .OrderBy(p => p.PunchDateTime)
                 .ToListAsync();
 
-            Dictionary<DateTime, double> dailyWorkingTimes = new Dictionary<DateTime, double>();
+            List<WorkingTimeDTO> workingTimes = new List<WorkingTimeDTO>();
             DateTime previousPunchDateTime = DateTime.MinValue;
+            double totalWorkingHours = 0;
 
             foreach (var punch in punches)
             {
                 if (previousPunchDateTime != DateTime.MinValue && punch.PunchDateTime.Date != previousPunchDateTime.Date)
                 {
-                    double totalWorkingHours = (punch.PunchDateTime - previousPunchDateTime).TotalHours;
+                    WorkingTimeDTO workingTime = new WorkingTimeDTO
+                    {
+                        Date = previousPunchDateTime.Date,
+                        WorkingTime = totalWorkingHours
+                    };
 
-                    if (dailyWorkingTimes.ContainsKey(previousPunchDateTime.Date))
-                    {
-                        dailyWorkingTimes[previousPunchDateTime.Date] += totalWorkingHours;
-                    }
-                    else
-                    {
-                        dailyWorkingTimes[previousPunchDateTime.Date] = totalWorkingHours;
-                    }
+                    workingTimes.Add(workingTime);
+                    totalWorkingHours = 0;
                 }
 
                 if (punch.PunchStatus)
                 {
                     previousPunchDateTime = punch.PunchDateTime;
                 }
+                else if (previousPunchDateTime != DateTime.MinValue)
+                {
+                    totalWorkingHours += (punch.PunchDateTime - previousPunchDateTime).TotalHours;
+                }
             }
 
-            List<WorkingTimeDTO> workingTimes = new List<WorkingTimeDTO>();
-
-            foreach (var entry in dailyWorkingTimes)
+            // Add the working time for the last day
+            if (previousPunchDateTime != DateTime.MinValue)
             {
                 WorkingTimeDTO workingTime = new WorkingTimeDTO
                 {
-                    Date = entry.Key.Date,
-                    WorkingTime = entry.Value
+                    Date = previousPunchDateTime.Date,
+                    WorkingTime = totalWorkingHours
                 };
 
                 workingTimes.Add(workingTime);
