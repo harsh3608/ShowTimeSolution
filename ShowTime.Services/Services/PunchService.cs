@@ -65,5 +65,12 @@ namespace ShowTime.Services.Services
 
             return workingTimes;
         }
+
+        public async Task<List<WorkingTimeDTO>> GetAllDaysWorkingTime(Guid userId)
+        {
+            var workingTimes = await _punchRepository.GetAllDaysWorkingTime(userId);
+
+            return workingTimes;
+        }
     }
 }
