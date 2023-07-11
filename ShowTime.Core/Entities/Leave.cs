@@ -25,5 +25,11 @@ namespace ShowTime.Core.Entities
 
         public bool IsApproved { get; set; }
 
+        public bool IsRejected { get; set; }
+
+        public bool IsHalfDay { get; set; }
+
+        public HalfDayShiftOptions HalfDayShift { get; set; }
+
     }
 }

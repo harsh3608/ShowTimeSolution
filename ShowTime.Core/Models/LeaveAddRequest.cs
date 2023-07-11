@@ -1,9 +1,4 @@
 ﻿using ShowTime.Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShowTime.Core.Models
 {
@@ -22,5 +17,11 @@ namespace ShowTime.Core.Models
         public LeaveTypeOptions LeaveType { get; set; }
 
         public bool IsApproved { get; set; }
+
+        public bool IsRejected { get; set; }
+
+        public bool IsHalfDay { get; set; }
+
+        public HalfDayShiftOptions HalfDayShift { get; set; }
     }
 }
