@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShowTime.Services.IServices
+namespace ShowTime.Infrastructure.IRepositories
 {
-    public interface ILeaveService
+    public interface ILeaveRepository
     {
+
+        
     }
 }
