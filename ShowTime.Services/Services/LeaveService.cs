@@ -1,4 +1,6 @@
-﻿using ShowTime.Infrastructure.IRepositories;
+﻿using ShowTime.Core.DTO;
+using ShowTime.Core.Models;
+using ShowTime.Infrastructure.IRepositories;
 using ShowTime.Services.IServices;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,19 @@ namespace ShowTime.Services.Services
         public LeaveService(ILeaveRepository leaveRepository)
         {
             _leaveRepository = leaveRepository;
+        }
+
+
+        public async Task<LeaveDTO> AddLeaveRequest(LeaveAddRequest request)
+        {
+            var leave = await _leaveRepository.AddLeaveRequest(request);
+            return leave;
+        }
+
+        public async Task<LeaveDTO> DeleteLeaveRequest(Guid leaveId)
+        {
+            var leave = await _leaveRepository.DeleteLeaveRequest(leaveId);
+            return leave;
         }
     }
 }

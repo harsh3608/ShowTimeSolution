@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ShowTime.Core.DTO;
+using ShowTime.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,8 @@ namespace ShowTime.Services.IServices
 {
     public interface ILeaveService
     {
+        Task<LeaveDTO> AddLeaveRequest(LeaveAddRequest request);
+
+        Task<LeaveDTO> DeleteLeaveRequest(Guid leaveId);
     }
 }
