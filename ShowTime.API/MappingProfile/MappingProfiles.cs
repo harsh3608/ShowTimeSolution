@@ -14,6 +14,9 @@ namespace ShowTime.API.MappingProfile
 
             CreateMap<Punch, PunchDTO>().ReverseMap();
 
+            CreateMap<Leave, LeaveAddRequest>().ReverseMap();
+
+            CreateMap<Leave, LeaveDTO>().ReverseMap();
 
         }
     }

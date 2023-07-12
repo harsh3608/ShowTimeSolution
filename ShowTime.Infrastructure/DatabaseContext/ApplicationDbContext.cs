@@ -21,5 +21,7 @@ namespace ShowTime.Infrastructure.DatabaseContext
         }
 
         public virtual DbSet<Punch> Punches { get; set; }
+
+        public virtual DbSet<Leave> Leaves { get; set; }
     }
 }

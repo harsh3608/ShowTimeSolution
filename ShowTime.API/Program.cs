@@ -32,9 +32,11 @@ builder.Services.AddAutoMapper(typeof(MappingProfiles));
 // Service Scopes
 builder.Services.AddTransient<IJwtService, JwtService>();
 builder.Services.AddTransient<IPunchService, PunchService>();
+builder.Services.AddTransient<ILeaveService, LeaveService>();
 
 // Repositories
 builder.Services.AddTransient<IPunchRepository, PunchRepository>();
+builder.Services.AddTransient<ILeaveRepository, LeaveRepository>();
 
 //Identity
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
