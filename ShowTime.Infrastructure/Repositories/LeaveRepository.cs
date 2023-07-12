@@ -53,14 +53,10 @@ namespace ShowTime.Infrastructure.Repositories
             return leaveDTO;
         }
 
-        public async Task<List<LeaveDTO>> GetAllLeaveRequests()
+        public async Task<IEnumerable<LeaveDTO>> GetAllLeaveRequests()
         {
             var leaves = await _context.Leaves.ToListAsync();
-
-            List<LeaveDTO> result = new List<LeaveDTO>();
-
-            _mapper.Map(leaves, result);
-
+            var result = _mapper.Map<List<LeaveDTO>>(leaves);
             return result;
         }
 
@@ -73,6 +69,14 @@ namespace ShowTime.Infrastructure.Repositories
             LeaveDTO leaveDTO = new LeaveDTO();
             _mapper.Map(leaveRequest, leaveDTO);
             return leaveDTO;
+        }
+
+        public async Task<IEnumerable<LeaveDTO>> GetUserAllLeaves(Guid UserId)
+        {
+            var leaves = await _context.Leaves.Where(x => x.UserId == UserId).ToListAsync();
+
+            var result = _mapper.Map<List<LeaveDTO>>(leaves);
+            return result;
         }
     }
 }

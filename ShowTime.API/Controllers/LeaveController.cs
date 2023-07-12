@@ -76,8 +76,8 @@ namespace ShowTime.API.Controllers
 
 
         [HttpDelete]
-        [Route("DeleteLeaveRequest")]
-        public async Task<ResponseDTO<LeaveDTO>> DeleteLeaveRequest(Guid leaveId)
+        [Route("DeleteLeaveRequest/{leaveId:Guid}")]
+        public async Task<ResponseDTO<LeaveDTO>> DeleteLeaveRequest([FromRoute] Guid leaveId)
         {
             ResponseDTO<LeaveDTO> response = new ResponseDTO<LeaveDTO>();
 
@@ -116,10 +116,117 @@ namespace ShowTime.API.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetAllLeaveRequests")]
+        public async Task<ResponseDTO<IEnumerable<LeaveDTO>>> GetAllLeaveRequests()
+        {
+            ResponseDTO<IEnumerable<LeaveDTO>> response = new ResponseDTO<IEnumerable<LeaveDTO>>();
+
+            var result = await _leaveService.GetAllLeaveRequests();
+
+            if (result != null)
+            {
+                response.StatusCode = 200;
+                response.IsSuccess = true;
+                response.Response = result;
+                response.Message = "All leave requests fetched successfully.";
+
+                return response;
+            }
+            else
+            {
+                response.StatusCode = 401;
+                response.IsSuccess = false;
+                response.Response = null;
+                response.Message = "Leave Requests Not Found.";
+
+                return response;
+            }
+        }
 
 
+        [HttpGet]
+        [Route("GetLeaveRequestById/{leaveId:Guid}")]
+        public async Task<ResponseDTO<LeaveDTO>> GetLeaveRequestById([FromRoute] Guid leaveId)
+        {
+            ResponseDTO<LeaveDTO> response = new ResponseDTO<LeaveDTO>();
+
+            if (!ModelState.IsValid)
+            {
+                response.StatusCode = 400;
+                response.IsSuccess = false;
+                response.Response = null;
+                response.Message = "Bad Request, One or more validation errors occured.";
+
+                return response;
+            }
+            else
+            {
+                var leave = await _leaveService.GetLeaveRequest(leaveId);
+
+                if (leave != null)
+                {
+                    response.StatusCode = 200;
+                    response.IsSuccess = true;
+                    response.Response = leave;
+                    response.Message = "Leave request fetched successfully";
+
+                    return response;
+                }
+                else
+                {
+                    response.StatusCode = 500;
+                    response.IsSuccess = false;
+                    response.Response = null;
+                    response.Message = "Internal Server Error";
+
+                    return response;
+                }
+            }
+        }
 
 
+        [HttpGet]
+        [Route("GetUserAllLeaves/{userId:Guid}")]
+        public async Task<ResponseDTO<IEnumerable<LeaveDTO>>> GetUserAllLeaves([FromRoute] Guid userId)
+        {
+            ResponseDTO<IEnumerable<LeaveDTO>> response = new ResponseDTO<IEnumerable<LeaveDTO>>();
+
+            if (!ModelState.IsValid)
+            {
+                response.StatusCode = 400;
+                response.IsSuccess = false;
+                response.Response = null;
+                response.Message = "Bad Request, One or more validation errors occured.";
+
+                return response;
+            }
+            else
+            {
+                var requests = await _leaveService.GetUserAllLeaves(userId);
+
+                if (requests != null)
+                {
+                    response.StatusCode = 200;
+                    response.IsSuccess = true;
+                    response.Response = requests;
+                    response.Message = "Leave requests fetched successfully";
+
+                    return response;
+                }
+                else
+                {
+                    response.StatusCode = 500;
+                    response.IsSuccess = false;
+                    response.Response = null;
+                    response.Message = "Internal Server Error";
+
+                    return response;
+                }
+            }
+
+
+        }
 
 
 

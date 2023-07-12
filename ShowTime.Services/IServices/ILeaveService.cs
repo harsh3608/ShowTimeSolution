@@ -14,8 +14,10 @@ namespace ShowTime.Services.IServices
 
         Task<LeaveDTO> DeleteLeaveRequest(Guid leaveId);
 
-        Task<List<LeaveDTO>> GetAllLeaveRequests();
+        Task<IEnumerable<LeaveDTO>> GetAllLeaveRequests();
 
         Task<LeaveDTO> GetLeaveRequest(Guid leaveId);
+
+        Task<IEnumerable<LeaveDTO>> GetUserAllLeaves(Guid UserId);
     }
 }

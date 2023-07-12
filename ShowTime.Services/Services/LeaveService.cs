@@ -32,7 +32,7 @@ namespace ShowTime.Services.Services
             return leave;
         }
 
-        public async Task<List<LeaveDTO>> GetAllLeaveRequests()
+        public async Task<IEnumerable<LeaveDTO>> GetAllLeaveRequests()
         {
             var leaves = await _leaveRepository.GetAllLeaveRequests();
             return leaves;
@@ -42,6 +42,12 @@ namespace ShowTime.Services.Services
         {
             var leave = await _leaveRepository.GetLeaveRequest(leaveId);
             return leave;
+        }
+
+        public async Task<IEnumerable<LeaveDTO>> GetUserAllLeaves(Guid UserId)
+        {
+            var leaves = await _leaveRepository.GetUserAllLeaves(UserId);
+            return leaves;
         }
     }
 }
