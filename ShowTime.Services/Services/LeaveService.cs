@@ -31,5 +31,17 @@ namespace ShowTime.Services.Services
             var leave = await _leaveRepository.DeleteLeaveRequest(leaveId);
             return leave;
         }
+
+        public async Task<List<LeaveDTO>> GetAllLeaveRequests()
+        {
+            var leaves = await _leaveRepository.GetAllLeaveRequests();
+            return leaves;
+        }
+
+        public async Task<LeaveDTO> GetLeaveRequest(Guid leaveId)
+        {
+            var leave = await _leaveRepository.GetLeaveRequest(leaveId);
+            return leave;
+        }
     }
 }

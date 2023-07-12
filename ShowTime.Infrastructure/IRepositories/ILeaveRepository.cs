@@ -10,5 +10,9 @@ namespace ShowTime.Infrastructure.IRepositories
         Task<LeaveDTO> AddLeaveRequest(LeaveAddRequest request);
 
         Task<LeaveDTO> DeleteLeaveRequest(Guid leaveId);
+
+        Task<List<LeaveDTO>> GetAllLeaveRequests();
+
+        Task<LeaveDTO> GetLeaveRequest(Guid leaveId);
     }
 }

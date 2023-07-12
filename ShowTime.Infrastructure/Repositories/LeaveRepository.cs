@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ShowTime.Infrastructure.Repositories
 {
-    public class LeaveRepository: ILeaveRepository
+    public class LeaveRepository : ILeaveRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -50,6 +50,28 @@ namespace ShowTime.Infrastructure.Repositories
 
             LeaveDTO leaveDTO = new LeaveDTO();
             _mapper.Map(leave, leaveDTO);
+            return leaveDTO;
+        }
+
+        public async Task<List<LeaveDTO>> GetAllLeaveRequests()
+        {
+            var leaves = await _context.Leaves.ToListAsync();
+
+            List<LeaveDTO> result = new List<LeaveDTO>();
+
+            _mapper.Map(leaves, result);
+
+            return result;
+        }
+
+
+        public async Task<LeaveDTO> GetLeaveRequest(Guid leaveId)
+        {
+            var leaveRequest = await _context.Leaves.FirstOrDefaultAsync(leave => leave.Id == leaveId);
+
+
+            LeaveDTO leaveDTO = new LeaveDTO();
+            _mapper.Map(leaveRequest, leaveDTO);
             return leaveDTO;
         }
     }
