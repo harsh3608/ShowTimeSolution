@@ -30,5 +30,7 @@ namespace ShowTime.Core.DTO
         public bool IsHalfDay { get; set; }
 
         public HalfDayShiftOptions HalfDayShift { get; set; }
+
+        public bool IsPaid { get; set; }
     }
 }

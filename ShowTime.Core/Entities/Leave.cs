@@ -31,5 +31,7 @@ namespace ShowTime.Core.Entities
 
         public HalfDayShiftOptions HalfDayShift { get; set; }
 
+        public bool IsPaid { get; set; }    
+
     }
 }
