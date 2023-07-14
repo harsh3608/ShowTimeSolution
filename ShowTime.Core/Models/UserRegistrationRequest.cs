@@ -9,7 +9,7 @@ namespace ShowTime.Core.Models
         public string PersonName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Gender can't be blank")]
-        public string? Gender { get; set; }
+        public string Gender { get; set; }
 
         [Required(ErrorMessage = "Email can't be blank")]
         [EmailAddress(ErrorMessage = "Email should be in a proper email address format")]
@@ -28,6 +28,13 @@ namespace ShowTime.Core.Models
         public UserTypeOptions UserType { get; set; } = UserTypeOptions.Employee;
 
         [Required(ErrorMessage = "Job Role can't be blank")]
-        public string? JobRole { get; set; }
+        public string JobRole { get; set; }
+
+        [Required(ErrorMessage = "Manager Id can't be blank")]
+        public Guid ManagerId { get; set; }
+
+        [Required(ErrorMessage = "Manager Name can't be blank")]
+        public string ManagerName { get; set; }
+
     }
 }

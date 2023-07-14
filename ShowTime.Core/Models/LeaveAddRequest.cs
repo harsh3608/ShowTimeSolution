@@ -23,5 +23,7 @@ namespace ShowTime.Core.Models
         public bool IsHalfDay { get; set; }
 
         public HalfDayShiftOptions HalfDayShift { get; set; }
+
+        public bool IsPaid { get; set; }
     }
 }
