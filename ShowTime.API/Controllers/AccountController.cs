@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ShowTime.Core.DTO;
 using ShowTime.Core.Enums;
 using ShowTime.Core.IdentityEntities;
@@ -59,6 +60,8 @@ namespace ShowTime.API.Controllers
                 Gender = registerDTO.Gender,
                 UserType = nameof(UserTypeOptions.Employee),
                 JobRole = registerDTO.JobRole,
+                ManagerId = registerDTO.ManagerId,
+                ManagerName = registerDTO.ManagerName,
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, registerDTO.Password);
@@ -235,7 +238,34 @@ namespace ShowTime.API.Controllers
             return response;
         }
 
+        [HttpGet]
+        [Route("GetAllUsers")]
+        public async Task<ResponseDTO<IEnumerable<ApplicationUser>>> GetAllUsers()
+        {
+            ResponseDTO<IEnumerable<ApplicationUser>> response = new ResponseDTO<IEnumerable<ApplicationUser>>();
 
+            List<ApplicationUser> users = await _userManager.Users.ToListAsync();
+
+            if(users != null)
+            {
+                response.StatusCode = 200;
+                response.IsSuccess = true;
+                response.Response = users;
+                response.Message = "All Users Fetched Succesfully";
+
+                return response;
+            }
+            else
+            {
+                response.StatusCode = 500;
+                response.IsSuccess = false;
+                response.Response = null;
+                response.Message = "Internal Server Error";
+
+                return response;
+            }
+            
+        }
 
     }
 }
