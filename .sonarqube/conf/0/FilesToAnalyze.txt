@@ -1,0 +1,17 @@
+﻿D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\DTO\ChangePasswordDTO.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\DTO\LeaveDTO.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\DTO\PunchDTO.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\DTO\ResponseDTO.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\DTO\WorkingTimeDTO.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\Entities\Leave.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\Entities\Punch.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\Enums\HalfDayShiftOptions.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\Enums\LeaveTypeOptions.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\Enums\UserTypeOptions.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\IdentityEntities\ApplicationRole.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\IdentityEntities\ApplicationUser.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\Models\AuthenticationResponse.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\Models\LeaveAddRequest.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\Models\PunchAddRequest.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\Models\UserLoginRequest.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Core\Models\UserRegistrationRequest.cs
