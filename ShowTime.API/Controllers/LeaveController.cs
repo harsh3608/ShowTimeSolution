@@ -48,7 +48,7 @@ namespace ShowTime.API.Controllers
                         response.StatusCode = 200;
                         response.IsSuccess = true;
                         response.Response = leave;
-                        response.Message = "Added leave request successfully";
+                        response.Message = "Leave request added successfully";
 
                         return response;
                     }

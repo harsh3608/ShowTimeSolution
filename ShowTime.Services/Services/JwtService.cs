@@ -70,36 +70,36 @@ namespace ShowTime.Services.Services
                 PersonName = user.PersonName,
                 UserType = user.UserType,
                 Expiration = expiration,
-
+                ManagerId = user.ManagerId,
+                ManagerName = user.ManagerName
             };
         }
-
 
         public ClaimsPrincipal? GetPrincipalFromJwtToken(string? token)
-        {
-            var tokenValidationParameters = new TokenValidationParameters()
             {
-                ValidateAudience = true,
-                ValidAudience = _configuration["Jwt:Audience"],
-                ValidateIssuer = true,
-                ValidIssuer = _configuration["Jwt:Issuer"],
+                var tokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateAudience = true,
+                    ValidAudience = _configuration["Jwt:Audience"],
+                    ValidateIssuer = true,
+                    ValidIssuer = _configuration["Jwt:Issuer"],
 
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])),
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])),
 
-                ValidateLifetime = false //should be false
-            };
+                    ValidateLifetime = false //should be false
+                };
 
-            JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+                JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
 
-            ClaimsPrincipal principal = jwtSecurityTokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+                ClaimsPrincipal principal = jwtSecurityTokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
 
-            if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-            {
-                throw new SecurityTokenException("Invalid token");
+                if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    throw new SecurityTokenException("Invalid token");
+                }
+
+                return principal;
             }
-
-            return principal;
         }
     }
-}

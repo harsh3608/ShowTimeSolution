@@ -5,11 +5,6 @@ using ShowTime.Core.Entities;
 using ShowTime.Core.Models;
 using ShowTime.Infrastructure.DatabaseContext;
 using ShowTime.Infrastructure.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShowTime.Infrastructure.Repositories
 {
@@ -29,6 +24,8 @@ namespace ShowTime.Infrastructure.Repositories
             Leave leave = new Leave();
 
             _mapper.Map(request, leave);
+            leave.Id = Guid.NewGuid();
+            leave.DateOfRequest = DateTime.Now;
 
             await _context.Leaves.AddAsync(leave);
             await _context.SaveChangesAsync();
