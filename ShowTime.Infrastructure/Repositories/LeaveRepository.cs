@@ -52,7 +52,7 @@ namespace ShowTime.Infrastructure.Repositories
 
         public async Task<IEnumerable<LeaveDTO>> GetAllLeaveRequests()
         {
-            var leaves = await _context.Leaves.ToListAsync();
+            var leaves = await _context.Leaves.OrderBy(x=>x.DateOfRequest).ToListAsync();
             var result = _mapper.Map<List<LeaveDTO>>(leaves);
             return result;
         }
@@ -60,7 +60,7 @@ namespace ShowTime.Infrastructure.Repositories
 
         public async Task<LeaveDTO> GetLeaveRequest(Guid leaveId)
         {
-            var leaveRequest = await _context.Leaves.FirstOrDefaultAsync(leave => leave.Id == leaveId);
+            var leaveRequest = await _context.Leaves.OrderBy(x => x.DateOfRequest).FirstOrDefaultAsync(leave => leave.Id == leaveId);
 
 
             LeaveDTO leaveDTO = new LeaveDTO();
