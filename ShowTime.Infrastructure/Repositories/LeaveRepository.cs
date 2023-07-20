@@ -24,6 +24,8 @@ namespace ShowTime.Infrastructure.Repositories
             Leave leave = new Leave();
 
             _mapper.Map(request, leave);
+            leave.Id = Guid.NewGuid();
+            leave.DateOfRequest = DateTime.Now;
 
             await _context.Leaves.AddAsync(leave);
             await _context.SaveChangesAsync();

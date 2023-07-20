@@ -25,5 +25,11 @@ namespace ShowTime.Core.Models
         public string HalfDayShift { get; set; }
 
         public bool IsPaid { get; set; }
+
+        public Guid ManagerId { get; set; }
+
+        public string ManagerName { get; set; }
+
+        public DateTime DateOfRequest { get; set; }
     }
 }
