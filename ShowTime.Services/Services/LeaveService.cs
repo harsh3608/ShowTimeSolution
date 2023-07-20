@@ -22,6 +22,9 @@ namespace ShowTime.Services.Services
 
         public async Task<LeaveDTO> AddLeaveRequest(LeaveAddRequest request)
         {
+            TimeSpan duration = request.EndDate - request.StartDate;
+            request.LeaveDays = duration.Days + 1;
+
             var leave = await _leaveRepository.AddLeaveRequest(request);
             return leave;
         }

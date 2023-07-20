@@ -31,5 +31,7 @@ namespace ShowTime.Core.Models
         public string ManagerName { get; set; }
 
         public DateTime DateOfRequest { get; set; }
+
+        public int LeaveDays { get; set; }
     }
 }

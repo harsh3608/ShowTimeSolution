@@ -39,5 +39,7 @@ namespace ShowTime.Core.Entities
 
         public DateTime DateOfRequest { get; set; }
 
+        public int LeaveDays { get; set; }
+        
     }
 }

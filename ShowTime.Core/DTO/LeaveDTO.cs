@@ -38,5 +38,7 @@ namespace ShowTime.Core.DTO
         public string ManagerName { get; set; }
 
         public DateTime DateOfRequest { get; set; }
+
+        public int LeaveDays { get; set; }
     }
 }
