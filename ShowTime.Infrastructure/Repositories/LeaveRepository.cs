@@ -5,11 +5,6 @@ using ShowTime.Core.Entities;
 using ShowTime.Core.Models;
 using ShowTime.Infrastructure.DatabaseContext;
 using ShowTime.Infrastructure.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShowTime.Infrastructure.Repositories
 {
