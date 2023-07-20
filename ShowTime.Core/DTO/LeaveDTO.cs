@@ -21,15 +21,13 @@ namespace ShowTime.Core.DTO
 
         public string Reason { get; set; }
 
-        public string LeaveType { get; set; }
+        public int LeaveType { get; set; }
 
-        public bool IsApproved { get; set; }
-
-        public bool IsRejected { get; set; }
+        public int Status { get; set; }
 
         public bool IsHalfDay { get; set; }
 
-        public string HalfDayShift { get; set; }
+        public int HalfDayShift { get; set; }
 
         public bool IsPaid { get; set; }
 
