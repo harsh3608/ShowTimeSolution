@@ -75,5 +75,27 @@ namespace ShowTime.Infrastructure.Repositories
             var result = _mapper.Map<List<LeaveDTO>>(leaves);
             return result;
         }
+
+        public async Task<LeaveDTO> ToggleLeaveStatus(Guid leaveId, int value)
+        {
+            var leave = await _context.Leaves.FirstOrDefaultAsync(x => x.Id == leaveId);
+
+            if (leave != null)
+            {
+                leave.Status = value;
+                await _context.SaveChangesAsync();
+
+                LeaveDTO leaveDTO = new LeaveDTO();
+                _mapper.Map(leave, leaveDTO);
+                return leaveDTO;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+
     }
 }

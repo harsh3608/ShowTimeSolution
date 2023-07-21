@@ -16,5 +16,7 @@ namespace ShowTime.Infrastructure.IRepositories
         Task<LeaveDTO> GetLeaveRequest(Guid leaveId);
 
         Task<IEnumerable<LeaveDTO>> GetUserAllLeaves(Guid UserId);
+
+        Task<LeaveDTO> ToggleLeaveStatus(Guid leaveId, int value);
     }
 }
