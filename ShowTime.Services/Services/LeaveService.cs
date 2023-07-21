@@ -52,5 +52,11 @@ namespace ShowTime.Services.Services
             var leaves = await _leaveRepository.GetUserAllLeaves(UserId);
             return leaves;
         }
+
+        public async Task<LeaveDTO> ToggleLeaveStatus(Guid leaveId, int value)
+        {
+            var leave = await _leaveRepository.ToggleLeaveStatus(leaveId, value);
+            return leave;
+        }
     }
 }

@@ -229,6 +229,45 @@ namespace ShowTime.API.Controllers
         }
 
 
+        [HttpPatch]
+        [Route("ToggleLeaveStatus")]
+        public async Task<ResponseDTO<LeaveDTO>> ToggleLeaveStatus(ToggleRequest data)
+        {
+            ResponseDTO<LeaveDTO> response = new ResponseDTO<LeaveDTO>();
+
+            if (!ModelState.IsValid)
+            {
+                response.StatusCode = 400;
+                response.IsSuccess = false;
+                response.Response = null;
+                response.Message = "Bad Request, One or more validation errors occured.";
+
+                return response;
+            }
+            else
+            {
+                var leave = await _leaveService.ToggleLeaveStatus(data.LeaveId, data.value);
+
+                if (leave != null)
+                {
+                    response.StatusCode = 200;
+                    response.IsSuccess = true;
+                    response.Response = leave;
+                    response.Message = "Leave request updated successfully";
+
+                    return response;
+                }
+                else
+                {
+                    response.StatusCode = 500;
+                    response.IsSuccess = false;
+                    response.Response = null;
+                    response.Message = "Internal Server Error";
+
+                    return response;
+                }
+            }
+        }
 
 
 
