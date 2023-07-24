@@ -15,6 +15,16 @@ D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastru
 D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230713055248_AddedPaidFlagOnLeaves.Designer.cs
 D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230714092411_AddedManagerToAppUser.cs
 D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230714092411_AddedManagerToAppUser.Designer.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230720043827_ChangedEnumTypeToString.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230720043827_ChangedEnumTypeToString.Designer.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230720063023_AddedFieldsInLeave.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230720063023_AddedFieldsInLeave.Designer.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230720072224_AddedNumOfDaysInLeave.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230720072224_AddedNumOfDaysInLeave.Designer.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230720072812_AddedNumberOfDaysInLeave.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230720072812_AddedNumberOfDaysInLeave.Designer.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230720111834_ChangedDataTypeInEnumValues.cs
+D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\20230720111834_ChangedDataTypeInEnumValues.Designer.cs
 D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Migrations\ApplicationDbContextModelSnapshot.cs
 D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Repositories\LeaveRepository.cs
 D:\Harsh\Projects\Fullstack_Samples\ShowTime\ShowTimeSolution\ShowTime.Infrastructure\Repositories\PunchRepository.cs
