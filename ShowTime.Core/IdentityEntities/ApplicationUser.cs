@@ -15,5 +15,7 @@ namespace ShowTime.Core.IdentityEntities
         public Guid ManagerId { get; set; }
 
         public string ManagerName { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
     }
 }

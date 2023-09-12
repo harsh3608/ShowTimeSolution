@@ -36,5 +36,6 @@ namespace ShowTime.Core.Models
         [Required(ErrorMessage = "Manager Name can't be blank")]
         public string ManagerName { get; set; }
 
+        public DateTime DateOfBirth { get; set; }
     }
 }

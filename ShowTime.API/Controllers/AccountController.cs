@@ -62,6 +62,7 @@ namespace ShowTime.API.Controllers
                 JobRole = registerDTO.JobRole,
                 ManagerId = registerDTO.ManagerId,
                 ManagerName = registerDTO.ManagerName,
+                DateOfBirth = registerDTO.DateOfBirth
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, registerDTO.Password);
